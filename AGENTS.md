@@ -18,7 +18,7 @@ Read README.md and install.sh before running installation. Run as the logged-in 
 ## Maintain this repository
 
 - Keep SKILL.md canonical; runtime adapters are thin and must not diverge.
-- Keep the OpenCode and Claude Code little guys distinct, named outside the ASCII art, and consistent across README, Pages, and installer output.
+- Keep one named mascot, Rocket, consistent across README, Pages, and installer output. OpenCode and Claude Code are installation targets, not separate character identities.
 - Keep each ASCII hero graphic-only, printable 7-bit ASCII, at most 36 columns, and exactly reused across required surfaces.
 - The installer prints the opening pose once, near startup. The related success pose appears only after installation verification and receipt creation.
 - Update tests, contracts, and documentation with behavioural changes.
