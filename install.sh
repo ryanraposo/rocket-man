@@ -137,7 +137,7 @@ with tarfile.open(archive,"r:gz") as tf:
     total_size=0
     for member in members:
         raw=member.name
-        if not raw.isascii() or "\\\\" in raw or any(ord(c)<32 or ord(c)==127 for c in raw):
+        if not raw.isascii() or chr(92) in raw or any(ord(c)<32 or ord(c)==127 for c in raw):
             raise SystemExit("archive member contains an unsupported path character")
         trimmed=raw[:-1] if member.isdir() and raw.endswith("/") else raw
         parts=trimmed.split("/")
