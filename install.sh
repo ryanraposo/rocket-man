@@ -87,19 +87,19 @@ info "[install 2/4] Stage complete runtime payloads"
 for i in "${!TARGETS[@]}"; do
   stage="$TX/stage-$i"; mkdir -p "$stage"
   if [[ "${LABELS[$i]}" == opencode ]]; then
-    cp "$ROOT/SKILL.md" "$stage/SKILL.md"
-    mkdir -p "$stage/contracts" "$stage/references"
+     mkdir -p "$stage/contracts" "$stage/references"
     cp "$ROOT/contracts/rocketman.json" "$stage/contracts/"
     cp "$ROOT/references/"*.md "$stage/references/"
-    cp "$ROOT/.opencode/skills/rocketman/SKILL.md" "$stage/ENTRYPOINT.md"
+    cp "$ROOT/SKILL.md" "$stage/references/rocketman-core.md"
+    cp "$ROOT/.opencode/skills/rocketman/SKILL.md" "$stage/SKILL.md"
   else
-    cp "$ROOT/SKILL.md" "$stage/SKILL.md"
-    mkdir -p "$stage/contracts" "$stage/references"
+     mkdir -p "$stage/contracts" "$stage/references"
     cp "$ROOT/contracts/rocketman.json" "$stage/contracts/"
     cp "$ROOT/references/"*.md "$stage/references/"
-    cp "$ROOT/.claude/skills/rocketman/SKILL.md" "$stage/ENTRYPOINT.md"
+    cp "$ROOT/SKILL.md" "$stage/references/rocketman-core.md"
+    cp "$ROOT/.claude/skills/rocketman/SKILL.md" "$stage/SKILL.md"
   fi
-  (cd "$stage" && sha256sum SKILL.md contracts/rocketman.json references/*.md ENTRYPOINT.md > MANIFEST.sha256)
+  (cd "$stage" && sha256sum SKILL.md contracts/rocketman.json references/*.md > MANIFEST.sha256)
   (cd "$stage" && sha256sum -c MANIFEST.sha256 >/dev/null) || die "staged payload verification failed"
 done
 
