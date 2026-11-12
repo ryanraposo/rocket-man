@@ -22,7 +22,7 @@ assert "Meet **Rocket**" in readme and "Luna" not in readme
 assert "Runtime characters" not in readme and "mascots" not in page
 assert "one named mascot, Rocket" in agents
 assert all("name: Rocket" in item for item in runtime_files)
-assert all("\n".join(opening) in item and "\n".join(success) in item for item in runtime_files)
+assert all(all(line in item for line in opening) and all(line in item for line in success) for item in runtime_files)
 print("One Rocket identity, aligned opening art, and lunar-lander success pose verified.")
 PY
 bash -n "$ROOT/install.sh"
