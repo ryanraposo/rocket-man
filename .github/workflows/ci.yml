@@ -1,0 +1,16 @@
+name: Rocketman checks
+on:
+  pull_request:
+  push:
+    branches: [main, dev]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate shell syntax
+        run: bash -n install.sh tests/run.sh
+      - name: Run installer and mascot tests
+        run: bash tests/run.sh
