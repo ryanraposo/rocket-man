@@ -37,4 +37,15 @@ grep -q "Read references/rocketman-core.md" "$tmp/home/.claude/skills/rocketman/
 (cd "$tmp/home/.config/opencode/skills/rocketman" && sha256sum -c MANIFEST.sha256 >/dev/null)
 (cd "$tmp/home/.claude/skills/rocketman" && sha256sum -c MANIFEST.sha256 >/dev/null)
 grep -q "Next: Start a fresh OpenCode or Claude Code session" "$tmp/install.txt"
-echo "Installer dry-run and dual-runtime installation tests passed."
+mkdir -p "$tmp/recovery-home/.config/opencode/skills/rocketman" "$tmp/recovery-home/.claude/skills/rocketman"
+printf 'opencode-original\\n' > "$tmp/recovery-home/.config/opencode/skills/rocketman/original.txt"
+printf 'claude-original\\n' > "$tmp/recovery-home/.claude/skills/rocketman/original.txt"
+if HOME="$tmp/recovery-home" OPENCODE_HOME="$tmp/recovery-home/.config/opencode" CLAUDE_HOME="$tmp/recovery-home/.claude" ROCKETMAN_STATE_HOME="$tmp/recovery-home/.local/state/rocketman" ROCKETMAN_TEST_FAIL_AFTER=claude-code bash "$ROOT/install.sh" > "$tmp/rollback.txt" 2>&1; then
+  echo "Expected injected failure did not occur" >&2
+  exit 1
+fi
+grep -q "opencode-original" "$tmp/recovery-home/.config/opencode/skills/rocketman/original.txt"
+grep -q "claude-original" "$tmp/recovery-home/.claude/skills/rocketman/original.txt"
+grep -q "Rollback: restoring" "$tmp/rollback.txt"
+test ! -d "$tmp/recovery-home/.local/state/rocketman/transaction.lock"
+echo "Installer dry-run, dual-runtime install, and reverse-rollback tests passed."
