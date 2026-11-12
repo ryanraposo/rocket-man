@@ -1,0 +1,18 @@
+runtime: opencode
+skill_path: .opencode/skills/rocketman/SKILL.md
+mascot:
+  name: Rocket
+  opening:
+    - "     /\\"
+    - "    /  \\"
+    - "   /____\\"
+    - "     ||"
+    - "    /||\\"
+    - "   /_||_\\"
+  success:
+    - "     /\\"
+    - "    /  \\"
+    - "   /____\\"
+    - "    \\ || /"
+    - "     \\||/"
+    - "      \\/"
