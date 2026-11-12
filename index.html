@@ -1,17 +1,33 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Rocketman: one little implementation copilot for OpenCode and Claude Code.">
-<title>Rocketman — staged implementation skill</title>
-<style>
-*{box-sizing:border-box}body{margin:0;background:#080d18;color:#edf3ff;font:16px/1.65 system-ui,sans-serif}main{max-width:820px;margin:auto;padding:64px 24px}header{text-align:center}.mascot{display:inline-block;margin:0;color:#86e5ff;font:16px/1.12 "Courier New",monospace;text-align:left}h1{font-size:clamp(2.5rem,8vw,5rem);line-height:1;margin:24px 0 12px;letter-spacing:-.06em}.sub{color:#b5c5df;font-size:1.15rem;max-width:660px;margin:0 auto}.intro{margin:46px 0 24px}.steps{margin:38px 0}.steps li{padding:6px 0;color:#c3d1e6}.install{padding:20px;border-radius:12px;background:#101a2a;border:1px solid #29364c;overflow-wrap:anywhere}code,pre{font-family:"Courier New",monospace}a{color:#86e5ff}@media(max-width:620px){main{padding:42px 18px}.mascot{font-size:14px}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Research, plan, implement, and verify software features through adaptive stages.">
+  <title>Rocketman</title>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;background:#fff;color:#111;font:15px/1.6 "Courier New",monospace;padding:44px 20px}
+    main{width:100%;max-width:720px;margin:0 auto;text-align:center}
+    .mascot{display:inline-block;margin:0;text-align:left;font:clamp(14px,3vw,18px)/1.08 "Courier New",monospace}
+    h1{font-size:clamp(2rem,7vw,3.25rem);line-height:1.05;letter-spacing:-.06em;margin:16px 0 10px}
+    .tagline{max-width:590px;margin:0 auto;color:#444;font-size:16px}
+    .name{margin:12px 0 34px;color:#555;font-size:13px}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:28px 0}
+    .card{border:1px solid #ddd;border-radius:9px;padding:15px;text-align:left;font-size:13px;color:#555}
+    .card strong{display:block;color:#111;margin-bottom:5px}
+    .install{margin-top:24px;padding:18px;border:1px solid #ddd;border-radius:9px;text-align:left}
+    .install h2{font-size:15px;margin:0 0 10px}
+    pre,code{font-family:inherit}
+    .commands{overflow-x:auto;margin:0;font-size:12px;line-height:1.8}
+    a{color:#111}
+    .links{font-size:12px;margin-top:22px}
+    @media(max-width:560px){body{padding:32px 18px}.grid{grid-template-columns:1fr}.tagline{font-size:15px}}
+  </style>
 </head>
-<body><main>
-<header>
-<pre class="mascot" aria-label="Rocket, Rocketman's mascot">
+<body>
+  <main>
+    <pre class="mascot" aria-label="Rocket, Rocketman's little guy">
      /\
     /  \
    /____\
@@ -20,16 +36,25 @@
    \____/
     /||\
    /_||_\</pre>
-<h1>ROCKETMAN</h1>
-<p class="sub">A serious little implementation copilot. Investigate deeply, plan adaptively, ship in stages, and keep the GitHub record honest.</p>
-<p>Meet <strong>Rocket</strong>: all thrust on take-off, steady landing when the work is verified.</p>
-</header>
-<section class="intro"><h2>One character. One workflow.</h2>
-<p>Rocketman brings the same researched, staged implementation process to both OpenCode and Claude Code. The runtimes are destinations, not separate personalities.</p></section>
-<section class="steps"><h2>Adaptive stages. Real completion.</h2>
-<ol><li>Inspect the repository, tools, architecture, branches, and existing work.</li><li>Research and define outcomes, invariants, dependencies, and verification.</li><li>Choose the right number of stages for the actual feature—not a fixed template.</li><li>Coordinate one parent GitHub issue and its implementation PR.</li><li>Verify each stage, record limitations, and keep completed and remaining work distinct.</li></ol></section>
-<section class="install"><h2>Install from a reviewed checkout</h2><pre>git clone https://github.com/ryanraposo/rocket-man
+    <h1>Rocketman</h1>
+    <p class="tagline">Research, plan, implement, and verify software features through adaptive stages coordinated by GitHub Issues and pull requests.</p>
+    <p class="name">Meet Rocket, your implementation copilot.</p>
+
+    <section class="grid" aria-label="What Rocketman does">
+      <div class="card"><strong>Understand</strong>Inspect the codebase, tools, architecture, and existing work.</div>
+      <div class="card"><strong>Decide</strong>Research the options, set invariants, and choose a practical approach.</div>
+      <div class="card"><strong>Build</strong>Plan the right number of stages and carry the implementation through.</div>
+      <div class="card"><strong>Verify</strong>Test the result, record limitations, and keep the project status honest.</div>
+    </section>
+
+    <section class="install">
+      <h2>Install from a reviewed checkout</h2>
+      <pre class="commands">git clone https://github.com/ryanraposo/rocket-man
 cd rocket-man
 bash install.sh --dry-run
-bash install.sh</pre><p>Private repository access is required. See <a href="https://github.com/ryanraposo/rocket-man">the repository</a> for the canonical skill, contracts, and installer.</p></section>
-</main></body></html>
+bash install.sh</pre>
+    </section>
+    <p class="links"><a href="https://github.com/ryanraposo/rocket-man">Repository</a> · <a href="https://github.com/ryanraposo/rocket-man/blob/main/SKILL.md">Skill instructions</a></p>
+  </main>
+</body>
+</html>
