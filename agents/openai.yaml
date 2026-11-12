@@ -1,0 +1,7 @@
+interface:
+  display_name: "Rocketman"
+  short_description: "Ship features in adaptive, verified stages"
+  default_prompt: "Use $rocketman to investigate, plan, implement, and verify this feature, keeping the GitHub issue and pull request aligned."
+
+policy:
+  allow_implicit_invocation: true
