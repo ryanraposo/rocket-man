@@ -3,25 +3,27 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' EXIT
 python3 - "$ROOT" <<'PY'
-import pathlib,sys
+import pathlib,sys,re
 root=pathlib.Path(sys.argv[1])
-rocket=["     /\\","    /  \\","   /____\\","  | o  o |","  |  __  |","   \\____/","    /||\\","   /_||_\\"]
-rocket_success=["     /\\","    /  \\","   /____\\","  | ^  ^ |","  |  \\_/ |","   \\____/","    /||\\","   /_||_\\"]
-luna=["   .-----.","  /| o o |\\"," /_|  ^  |_\\","    |   |","  __|   |__"," /_________\\"]
-luna_success=["   .-----.","  /| ^ ^ |\\"," /_|  \\_/ |_\\","    |   |","  __|   |__"," /_________\\"]
-for name,art in [("Rocket",rocket),("Rocket success",rocket_success),("Luna",luna),("Luna success",luna_success)]:
+opening=["     /\\","    /  \\","   /____\\","  | o  o |","  |  __  |","   \\____/","    /||\\","   /_||_\\"]
+success=["    .-----.","   /| ^ ^ |\\","  /_| \\_/ |_\\","     |___|","   __|   |__","  /___| |___\\"]
+for name,art in [("Rocket opening",opening),("Rocket success",success)]:
     assert all(line.isascii() and len(line)<=36 and all(32<=ord(ch)<=126 for ch in line) for line in art), name
 readme=(root/"README.md").read_text()
 page=(root/"index.html").read_text()
 installer=(root/"install.sh").read_text()
-for name,art in [("Rocket",rocket),("Luna",luna)]:
-    for surface,source in [("README",readme),("Pages",page),("installer",installer)]:
-        assert "\n".join(art) in source, f"{name} opening pose missing from {surface}"
-assert "\n".join(rocket_success) in installer
-assert "\n".join(luna_success) in installer
-assert "name: rocketman" in (root/".opencode/skills/rocketman/SKILL.md").read_text()
-assert "name: rocketman" in (root/".claude/skills/rocketman/SKILL.md").read_text()
-print("Runtime entrypoints and four mascot poses verified.")
+agents=(root/"AGENTS.md").read_text()
+runtime_files=[(root/"runtimes/opencode.yaml").read_text(),(root/"runtimes/claude-code.yaml").read_text()]
+assert "\n".join(line.ljust(max(map(len,opening))) for line in opening) in readme, "centered README art must be cell-aligned"
+assert "\n".join(opening) in page, "Pages opening pose missing"
+assert installer.count("\n".join(opening))==1, "installer must print one opening pose"
+assert "\n".join(success) in installer, "verified success lander missing"
+assert "Meet **Rocket**" in readme and "Luna" not in readme
+assert "Runtime characters" not in readme and "mascots" not in page
+assert "one named mascot, Rocket" in agents
+assert all("name: Rocket" in item for item in runtime_files)
+assert all("\n".join(opening) in item and "\n".join(success) in item for item in runtime_files)
+print("One Rocket identity, aligned opening art, and lunar-lander success pose verified.")
 PY
 bash -n "$ROOT/install.sh"
 bash "$ROOT/install.sh" --dry-run > "$tmp/dry-run.txt"
@@ -37,6 +39,7 @@ grep -q "Read references/rocketman-core.md" "$tmp/home/.claude/skills/rocketman/
 (cd "$tmp/home/.config/opencode/skills/rocketman" && sha256sum -c MANIFEST.sha256 >/dev/null)
 (cd "$tmp/home/.claude/skills/rocketman" && sha256sum -c MANIFEST.sha256 >/dev/null)
 grep -q "Next: Start a fresh OpenCode or Claude Code session" "$tmp/install.txt"
+grep -q "^    .-----." "$tmp/install.txt"
 mkdir -p "$tmp/recovery-home/.config/opencode/skills/rocketman" "$tmp/recovery-home/.claude/skills/rocketman"
 printf 'opencode-original\\n' > "$tmp/recovery-home/.config/opencode/skills/rocketman/original.txt"
 printf 'claude-original\\n' > "$tmp/recovery-home/.claude/skills/rocketman/original.txt"
