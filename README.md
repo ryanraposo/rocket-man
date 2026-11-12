@@ -2,14 +2,14 @@
 
 <div align="center">
 <pre>
-     /\   
-    /  \  
-   /____\ 
+     /\
+    /  \
+   /____\
   | o  o |
   |  __  |
-   \____/ 
-    /||\  
-   /_||_\ 
+   \____/
+    /||\
+   /_||_\
 </pre>
 </div>
 
@@ -26,7 +26,7 @@ Rocketman turns a feature request into a researched, staged, verifiable implemen
 - **Coordinate:** maintain a GitHub issue as the durable plan, with branch/base, completed and remaining stage checklists, and closeout comments.
 - **Implement:** work on a feature branch and keep the PR and issue aligned as scope or progress changes.
 - **Verify:** distinguish implementation, tests, experiments, mocks, and target-runtime behaviour. Never overstate what a check proves.
-- **Close out:** record exact changes, evidence, remaining assumptions, and next action. Keep the parent issue open while planned work remains.
+- **Close out:** record exact changes, verification, remaining assumptions, and next action. Keep the parent issue open while planned work remains.
 
 ## Installation
 
@@ -42,7 +42,3 @@ The installer targets `~/.config/opencode/skills/rocketman` and `~/.claude/skill
 ## Development
 
 See AGENTS.md for repository guidance and SKILL.md for the canonical workflow. The workflow contract and reference material live in contracts/ and references/.
-
-## Provenance
-
-The staged GitHub workflow is grounded in [GODMASK issue #85](https://github.com/ryanraposo/GODMASK/issues/85): a baseline and architecture stage, adaptive implementation stages, per-stage issue closeouts, linked PR commits, explicit remaining work, and honest boundaries around synthetic validation versus real runtime execution.
