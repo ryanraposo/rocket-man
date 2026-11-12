@@ -26,15 +26,7 @@ cat <<'ROCKET'
    /_||_\
 ROCKET
 printf '\n'
-cat <<'LUNA'
-   .-----.
-  /| o o |\
- /_|  ^  |_\
-    |   |
-  __|   |__
- /_________\
-LUNA
-printf '\n'
+
 
 while (($#)); do
   case "$1" in
@@ -135,20 +127,10 @@ printf '  Receipt: %s\n' "$TX/receipt"
 printf '  Next: Start a fresh OpenCode or Claude Code session to discover /rocketman.\n\n'
 
 cat <<'ROCKET_SUCCESS'
-     /\
-    /  \
-   /____\
-  | ^  ^ |
-  |  \_/ |
-   \____/
-    /||\
-   /_||_\
+    .-----.
+   /| ^ ^ |\
+  /_| \_/ |_\
+     |___|
+   __|   |__
+  /___| |___\
 ROCKET_SUCCESS
-cat <<'LUNA_SUCCESS'
-   .-----.
-  /| ^ ^ |\
- /_|  \_/ |_\
-    |   |
-  __|   |__
- /_________\
-LUNA_SUCCESS
