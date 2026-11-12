@@ -44,7 +44,7 @@ curl -fsSL --proto '=https' --tlsv1.2 https://ryanraposo.github.io/rocket-man/in
   ROCKETMAN_VERSION=0.1.0 bash
 ```
 
-The short form is not available while the repository is private or Pages and a matching release are unpublished.
+The short form is not available while the repository is private or Pages and a matching release are unpublished. Build a deterministic release bundle with `bash scripts/package-release.sh dist`, then review and upload `dist/rocketman-X.Y.Z.tar.gz` and `dist/SHA256SUMS` to the matching `vX.Y.Z` GitHub release. Do not treat a draft release as the public install endpoint.
 
 ## Options
 
