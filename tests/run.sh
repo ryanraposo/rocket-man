@@ -36,9 +36,11 @@ test ! -e "$tmp/dry-home/.config/opencode"
 test ! -e "$tmp/dry-home/.claude"
 test ! -e "$tmp/dry-home/.local/state/rocketman"
 bash "$ROOT/scripts/package-release.sh" "$tmp/dist" > "$tmp/package.txt"
+bash "$ROOT/scripts/package-release.sh" "$tmp/dist-repeat" > "$tmp/package-repeat.txt"
 test -s "$tmp/dist/rocketman-0.1.0.tar.gz"
 test -s "$tmp/dist/SHA256SUMS"
 (cd "$tmp/dist" && sha256sum -c SHA256SUMS >/dev/null)
+cmp "$tmp/dist/rocketman-0.1.0.tar.gz" "$tmp/dist-repeat/rocketman-0.1.0.tar.gz"
 python3 - "$tmp/dist/rocketman-0.1.0.tar.gz" <<'PY'
 import sys,tarfile
 with tarfile.open(sys.argv[1],"r:gz") as tf:
@@ -47,8 +49,53 @@ with tarfile.open(sys.argv[1],"r:gz") as tf:
     assert "rocketman-0.1.0/SKILL.md" in names
     assert "rocketman-0.1.0/scripts/install-skill.sh" in names
     assert "rocketman-0.1.0/install.sh" in names
-print("Versioned release archive structure verified.")
+print("Versioned, reproducible release archive verified.")
 PY
+
+# Exercise the actual piped bootstrap with a local transport stub.
+mkdir -p "$tmp/mockbin"
+cat > "$tmp/mockbin/curl" <<'MOCK_CURL'
+#!/usr/bin/env bash
+set -euo pipefail
+output="" url="" take_output=false
+for arg in "$@"; do
+  if $take_output; then output="$arg"; take_output=false; continue; fi
+  case "$arg" in
+    --output) take_output=true ;;
+    https://*) url="$arg" ;;
+  esac
+done
+[[ -n "$output" && -n "$url" ]] || exit 2
+cp "$TEST_RELEASE_DIR/${url##*/}" "$output"
+MOCK_CURL
+chmod +x "$tmp/mockbin/curl"
+mkdir -p "$tmp/remote-home"
+cat "$ROOT/install.sh" | env PATH="$tmp/mockbin:$PATH" TEST_RELEASE_DIR="$tmp/dist" \
+  ROCKETMAN_RELEASE_BASE_URL="https://mock.invalid/releases/download" ROCKETMAN_VERSION=0.1.0 \
+  HOME="$tmp/remote-home" OPENCODE_HOME="$tmp/remote-home/.config/opencode" \
+  CLAUDE_HOME="$tmp/remote-home/.claude" ROCKETMAN_STATE_HOME="$tmp/remote-home/.local/state/rocketman" \
+  bash > "$tmp/remote-install.txt"
+test -f "$tmp/remote-home/.config/opencode/skills/rocketman/SKILL.md"
+test -f "$tmp/remote-home/.claude/skills/rocketman/SKILL.md"
+grep -q "Artifact checksum verified" "$tmp/remote-install.txt"
+grep -q "Next: Start a fresh OpenCode or Claude Code session" "$tmp/remote-install.txt"
+
+# A bad same-origin checksum must stop before any install destination is created.
+mkdir -p "$tmp/bad-release" "$tmp/bad-home"
+cp "$tmp/dist/rocketman-0.1.0.tar.gz" "$tmp/bad-release/"
+printf '%064d  rocketman-0.1.0.tar.gz\n' 0 > "$tmp/bad-release/SHA256SUMS"
+if cat "$ROOT/install.sh" | env PATH="$tmp/mockbin:$PATH" TEST_RELEASE_DIR="$tmp/bad-release" \
+  ROCKETMAN_RELEASE_BASE_URL="https://mock.invalid/releases/download" ROCKETMAN_VERSION=0.1.0 \
+  HOME="$tmp/bad-home" OPENCODE_HOME="$tmp/bad-home/.config/opencode" \
+  CLAUDE_HOME="$tmp/bad-home/.claude" ROCKETMAN_STATE_HOME="$tmp/bad-home/.local/state/rocketman" \
+  bash > "$tmp/bad-checksum.txt" 2>&1; then
+  echo "Expected checksum rejection did not occur" >&2
+  exit 1
+fi
+test ! -e "$tmp/bad-home/.config/opencode"
+test ! -e "$tmp/bad-home/.claude"
+grep -q "SHA-256 mismatch" "$tmp/bad-checksum.txt"
+
 mkdir -p "$tmp/home"
 HOME="$tmp/home" OPENCODE_HOME="$tmp/home/.config/opencode" CLAUDE_HOME="$tmp/home/.claude" ROCKETMAN_STATE_HOME="$tmp/home/.local/state/rocketman" bash "$ROOT/install.sh" > "$tmp/install.txt"
 test -f "$tmp/home/.config/opencode/skills/rocketman/SKILL.md"
@@ -62,6 +109,7 @@ grep -q "Read references/rocketman-core.md" "$tmp/home/.claude/skills/rocketman/
 grep -q "Next: Start a fresh OpenCode or Claude Code session" "$tmp/install.txt"
 grep -q "^    .-----." "$tmp/install.txt"
 test -s "$tmp/home/.local/state/rocketman/transactions/"*/receipt
+
 mkdir -p "$tmp/recovery-home/.config/opencode/skills/rocketman" "$tmp/recovery-home/.claude/skills/rocketman"
 printf 'opencode-original\n' > "$tmp/recovery-home/.config/opencode/skills/rocketman/original.txt"
 printf 'claude-original\n' > "$tmp/recovery-home/.claude/skills/rocketman/original.txt"
@@ -73,4 +121,4 @@ grep -q "opencode-original" "$tmp/recovery-home/.config/opencode/skills/rocketma
 grep -q "claude-original" "$tmp/recovery-home/.claude/skills/rocketman/original.txt"
 grep -q "Rollback: restoring" "$tmp/rollback.txt"
 test ! -d "$tmp/recovery-home/.local/state/rocketman/transaction.lock"
-echo "Installer dry-run, release packaging, dual-runtime install, and reverse-rollback tests passed."
+echo "Piped bootstrap, checksum rejection, dry-run, reproducible packaging, dual-runtime install, and reverse-rollback tests passed."
