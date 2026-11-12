@@ -1,0 +1,38 @@
+{
+  "contract_version": "1.0.0",
+  "skill": "rocketman",
+  "principles": {
+    "adaptive_stages": true,
+    "fixed_stage_count": false,
+    "github_is_durable_record_when_available": true,
+    "issue_pr_synchronization": true,
+    "honest_verification_boundaries": true,
+    "preserve_unrelated_user_state": true
+  },
+  "limits": {
+    "decision_changing_questions": 3
+  },
+  "required_issue_sections": [
+    "Objective",
+    "Invariants",
+    "Implementation status",
+    "Completed",
+    "Remaining"
+  ],
+  "stage_closeout_fields": [
+    "stage",
+    "status",
+    "branch",
+    "implementation",
+    "verification",
+    "limitations",
+    "pull_request",
+    "commits"
+  ],
+  "completion": {
+    "all_planned_stages_verified": true,
+    "issue_and_pr_reconciled": true,
+    "remaining_work_explicit": true,
+    "close_parent_issue_only_when_all_stages_complete": true
+  }
+}

@@ -1,71 +1,22 @@
-# Rocketman
-
+<div align="center">
 <pre>
-     /\
-    /  \
-   /____\
-     ||
-    /||\
-   /_||_\
+     /\   
+    /  \  
+   /____\ 
+  | o  o |
+  |  __  |
+   \____/ 
+    /||\  
+   /_||_\ 
 </pre>
 
-**Meet Rocket**, the OpenCode little guy. He carries the shared /rocketman workflow into OpenCode.
+# Rocketman
 
-For Claude Code, meet **Luna**, the lunar-lander little guy: the same mission discipline, a different ride.
+</div>
+
+Meet **Rocket**, Rocketman's little guy. He blasts off to get the work moving, then plants his feet like a lunar lander when the mission is verified.
 
 Rocketman turns a feature request into a researched, staged, verifiable implementation. GitHub Issues and pull requests are the durable project record; stage count and boundaries adapt to the work.
-
-## Runtime characters
-
-### OpenCode — Rocket
-
-Opening pose:
-
-```text
-     /\
-    /  \
-   /____\
-     ||
-    /||\
-   /_||_\
-```
-
-Verified-success pose:
-
-```text
-     /\
-    /  \
-   /____\
-    \ || /
-     \||/
-      \/
-```
-
-### Claude Code — Luna
-
-Opening pose:
-
-```text
-    .---.
-   /|   |\
-  /_|___|_\
-     | |
-   __| |__
-  /_______\
-```
-
-Verified-success pose:
-
-```text
-    .---.
-   /| ^ |\
-  /_|___|_\
-     | |
-   __| |__
-  /_______\
-```
-
-All hero grids are printable 7-bit ASCII, graphic-only, and kept within 36 columns. Names live in surrounding copy, never inside the artwork.
 
 ## What it does
 
@@ -76,16 +27,49 @@ All hero grids are printable 7-bit ASCII, graphic-only, and kept within 36 colum
 - **Coordinate:** maintain a GitHub issue as the durable plan, with branch/base, completed and remaining stage checklists, and closeout comments.
 - **Implement:** work on a feature branch and keep the PR and issue aligned as scope or progress changes.
 - **Verify:** distinguish implementation, tests, experiments, mocks, and target-runtime behaviour. Never overstate what a check proves.
-- **Close out:** record exact changes, evidence, remaining assumptions, and next action. Keep the parent issue open while planned work remains.
+- **Close out:** record exact changes, verification, remaining assumptions, and next action. Keep the parent issue open while planned work remains.
 
 ## Installation
 
-Runtime adapters and shared skill instructions are in this repository. Installation instructions will be added with the installer.
+Rocketman installs one canonical workflow into OpenCode, Claude Code, or both. The public bootstrap downloads a versioned release, verifies its exact SHA-256, validates the archive, then hands off to the transactional installer.
+
+**From a reviewed checkout:**
+
+```bash
+bash install.sh --dry-run
+bash install.sh
+```
+
+**Remote install — once this repository is public, Pages is enabled, and a matching release is published:**
+
+Review-first:
+
+```bash
+curl -fsSLo install.sh --proto '=https' --tlsv1.2 https://ryanraposo.github.io/rocket-man/install.sh
+less install.sh
+bash install.sh --dry-run
+bash install.sh
+```
+
+Short form:
+
+```bash
+curl -fsSL --proto '=https' --tlsv1.2 https://ryanraposo.github.io/rocket-man/install.sh | bash
+```
+
+Version-pinned:
+
+```bash
+curl -fsSL --proto '=https' --tlsv1.2 https://ryanraposo.github.io/rocket-man/install.sh |
+  ROCKETMAN_VERSION=0.1.0 bash
+```
+
+A same-origin checksum detects corruption and mismatches; it is not an independent root of trust. Add `--require-attestation` when the release has GitHub build provenance and the GitHub CLI is available.
+
+The installer targets `~/.config/opencode/skills/rocketman` and `~/.claude/skills/rocketman`. Existing destinations are preserved as sibling backups. A failed multi-runtime commit rolls back in reverse order. Receipts live under `~/.local/state/rocketman/transactions/`.
+
+See [the installer contract](references/installer-contract.md) for the release format, trust boundary, options, and recovery behaviour.
 
 ## Development
 
 See AGENTS.md for repository guidance and SKILL.md for the canonical workflow. The workflow contract and reference material live in contracts/ and references/.
-
-## Provenance
-
-The staged GitHub workflow is grounded in [GODMASK issue #85](https://github.com/ryanraposo/GODMASK/issues/85): a baseline and architecture stage, adaptive implementation stages, per-stage issue closeouts, linked PR commits, explicit remaining work, and honest boundaries around synthetic validation versus real runtime execution.

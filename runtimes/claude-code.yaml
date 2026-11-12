@@ -1,0 +1,20 @@
+runtime: claude-code
+skill_path: .claude/skills/rocketman/SKILL.md
+mascot:
+  name: Rocket
+  opening: |
+         /\
+        /  \
+       /____\
+      | o  o |
+      |  __  |
+       \____/
+        /||\
+       /_||_\
+  success: |
+       .-----.
+      /| ^ ^ |\
+     /_| \_/ |_\
+        |___|
+      __|   |__
+     /___| |___\
