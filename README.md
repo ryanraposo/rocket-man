@@ -9,6 +9,7 @@
     /||\  
    /_||_\ 
 </pre>
+</div>
 
 # Rocketman
 
@@ -70,6 +71,9 @@ The installer targets `~/.config/opencode/skills/rocketman` and `~/.claude/skill
 
 See [the installer contract](references/installer-contract.md) for the release format, trust boundary, options, and recovery behaviour.
 
-## Development
+```bash
+bash install.sh --dry-run
+bash install.sh
+```
 
 See AGENTS.md for repository guidance and SKILL.md for the canonical workflow. The workflow contract and reference material live in contracts/ and references/.
