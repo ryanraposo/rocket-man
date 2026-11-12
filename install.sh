@@ -122,6 +122,7 @@ for i in "${!TARGETS[@]}"; do
   COMMITTED=$((COMMITTED+1))
   (cd "$target" && sha256sum -c MANIFEST.sha256 >/dev/null) || die "installed payload verification failed: $target"
   ok "${LABELS[$i]} installed and verified"
+  if [[ "${ROCKETMAN_TEST_FAIL_AFTER:-}" == "${LABELS[$i]}" ]]; then die "injected failure after ${LABELS[$i]} commit"; fi
 done
 
 info "[install 4/4] Finalize receipt"
