@@ -121,14 +121,11 @@ for i in "${!TARGETS[@]}"; do
 done
 
 info "[install 4/4] Finalize receipt"
-for i in "${!BACKUPS[@]}"; do
-  backup="${BACKUPS[$i]}"
-  [[ -z "$backup" ]] || { mkdir -p "$STATE_HOME/backups"; mv "$backup" "$STATE_HOME/backups/$(basename "$TX")-${LABELS[$i]}"; }
-done
 printf 'version=0.1.0\ninstalled=%s\nmode=%s\n' "$(date -u +%FT%TZ)" "$MODE" > "$TX/receipt"
 ACTIVE=false
 printf '\nRocketman installed and independently verified.\n'
 for i in "${!TARGETS[@]}"; do printf '  %-12s %s\n' "${LABELS[$i]}:" "${TARGETS[$i]}"; done
+for i in "${!BACKUPS[@]}"; do backup="${BACKUPS[$i]}"; [[ -z "$backup" ]] || printf '  Backup: %s\n' "$backup"; done
 printf '  Receipt: %s\n' "$TX/receipt"
 printf '  Next: Start a fresh OpenCode or Claude Code session to discover /rocketman.\n\n'
 
