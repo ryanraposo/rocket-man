@@ -15,7 +15,7 @@
 
 </div>
 
-Meet **Rocket**. He blasts off to get moving, then plants his feet like a lunar lander when the mission a go.
+Meet **Rocket**. He blasts off to get moving, then plants his feet like a lunar lander when the mission a-go.
 
 **Rocket** turns a feature request into a researched, staged, verifiable implementation. GitHub Issues and pull requests are his tools; synced stages are deployed in his wake; and his approach adapts to the work.
 
