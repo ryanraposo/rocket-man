@@ -130,12 +130,15 @@ archive,expected,destination=Path(sys.argv[1]),sys.argv[2],Path(sys.argv[3])
 seen=set()
 with tarfile.open(archive,"r:gz") as tf:
     members=tf.getmembers()
-    if not members:
-        raise SystemExit("release archive is empty")
+    if not members or len(members)>3000:
+        raise SystemExit("release archive is empty or contains too many entries")
+    if archive.stat().st_size>50*1024*1024:
+        raise SystemExit("release archive exceeds the 50 MiB download limit")
+    total_size=0
     for member in members:
         raw=member.name
-        if any(ord(c)<32 or ord(c)==127 for c in raw):
-            raise SystemExit("archive member contains a control character")
+        if not raw.isascii() or "\\\\" in raw or any(ord(c)<32 or ord(c)==127 for c in raw):
+            raise SystemExit("archive member contains an unsupported path character")
         trimmed=raw[:-1] if member.isdir() and raw.endswith("/") else raw
         parts=trimmed.split("/")
         if not trimmed or raw.startswith("/") or any(p in ("",".","..") for p in parts) or parts[0]!=expected:
@@ -146,6 +149,10 @@ with tarfile.open(archive,"r:gz") as tf:
         seen.add(normalized)
         if not (member.isdir() or member.isfile()):
             raise SystemExit("links and special archive entries are not allowed: "+raw)
+        if member.isfile():
+            total_size+=member.size
+            if member.size<0 or total_size>100*1024*1024:
+                raise SystemExit("archive exceeds the 100 MiB expanded-size limit")
         if member.mode & 0o7000:
             raise SystemExit("dangerous permission bits in archive member: "+raw)
     destination.mkdir(mode=0o700)
