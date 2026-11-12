@@ -8,7 +8,7 @@ DRY_RUN=false
 OPENCODE_HOME="${OPENCODE_HOME:-$HOME/.config/opencode}"
 CLAUDE_HOME="${CLAUDE_HOME:-$HOME/.claude}"
 STATE_HOME="${ROCKETMAN_STATE_HOME:-$HOME/.local/state/rocketman}"
-TARGETS=() LABELS=() STAGES=() BACKUPS=() COMMITTED=0 ACTIVE=false
+TARGETS=() LABELS=() BACKUPS=() COMMITTED=0 ACTIVE=false
 
 info(){ printf '\033[34m[INFO]\033[0m %s\n' "$*"; }
 ok(){ printf '\033[32m[OK]\033[0m %s\n' "$*"; }
@@ -43,7 +43,7 @@ while (($#)); do
 done
 
 [[ "${EUID:-$(id -u)}" -ne 0 ]] || die "run as the logged-in user, not root"
-command -v cp >/dev/null && command -v mv >/dev/null && command -v python3 >/dev/null || die "cp, mv, and python3 are required"
+command -v cp >/dev/null && command -v mv >/dev/null && command -v sha256sum >/dev/null || die "cp, mv, and sha256sum are required"
 [[ -f "$ROOT/SKILL.md" && -f "$ROOT/contracts/rocketman.json" ]] || die "run this installer from a complete Rocketman checkout"
 
 case "$MODE" in both|opencode) LABELS+=(opencode); TARGETS+=("$OPENCODE_HOME/skills/rocketman") ;; esac
@@ -69,7 +69,7 @@ rollback(){
   local i target backup
   $ACTIVE || return 0
   warn "Rollback: restoring $COMMITTED committed runtime target(s)"
-  for ((i=COMMITTED-1;i>=0;i--)); do
+  for ((i=${#BACKUPS[@]}-1;i>=0;i--)); do
     target="${TARGETS[$i]}"; backup="${BACKUPS[$i]}"
     [[ ! -e "$target" ]] || mv "$target" "$TX/failed-$i" || true
     [[ -z "$backup" || ! -e "$backup" ]] || mv "$backup" "$target" || warn "manual recovery required: $backup -> $target"
