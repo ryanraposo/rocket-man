@@ -80,7 +80,7 @@ All hero grids are printable 7-bit ASCII, graphic-only, and kept within 36 colum
 
 ## Installation
 
-Runtime adapters and shared skill instructions are in this repository. Installation instructions will be added with the installer.
+Runtime adapters and shared skill instructions are in this repository. From a reviewed checkout, run `bash install.sh --dry-run` and then `bash install.sh`. The installer targets `~/.config/opencode/skills/rocketman` and `~/.claude/skills/rocketman`.
 
 ## Development
 
