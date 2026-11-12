@@ -15,7 +15,7 @@
 
 </div>
 
-Meet **Rocket**, Rocketman's little guy. He blasts off to get the work moving, then plants his feet like a lunar lander when the mission is verified.
+Meet **Rocket**. He blasts off to get moving, then plants his feet like a lunar lander when the mission a go.
 
 Rocketman turns a feature request into a researched, staged, verifiable implementation. GitHub Issues and pull requests are the durable project record; stage count and boundaries adapt to the work.
 
