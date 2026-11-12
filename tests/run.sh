@@ -29,7 +29,11 @@ grep -q "Dry run complete" "$tmp/dry-run.txt"
 mkdir -p "$tmp/home"
 HOME="$tmp/home" OPENCODE_HOME="$tmp/home/.config/opencode" CLAUDE_HOME="$tmp/home/.claude" ROCKETMAN_STATE_HOME="$tmp/home/.local/state/rocketman" bash "$ROOT/install.sh" > "$tmp/install.txt"
 test -f "$tmp/home/.config/opencode/skills/rocketman/SKILL.md"
+test -f "$tmp/home/.config/opencode/skills/rocketman/references/rocketman-core.md"
+grep -q "Read references/rocketman-core.md" "$tmp/home/.config/opencode/skills/rocketman/SKILL.md"
 test -f "$tmp/home/.claude/skills/rocketman/SKILL.md"
+test -f "$tmp/home/.claude/skills/rocketman/references/rocketman-core.md"
+grep -q "Read references/rocketman-core.md" "$tmp/home/.claude/skills/rocketman/SKILL.md"
 (cd "$tmp/home/.config/opencode/skills/rocketman" && sha256sum -c MANIFEST.sha256 >/dev/null)
 (cd "$tmp/home/.claude/skills/rocketman" && sha256sum -c MANIFEST.sha256 >/dev/null)
 grep -q "Next: Start a fresh OpenCode or Claude Code session" "$tmp/install.txt"
