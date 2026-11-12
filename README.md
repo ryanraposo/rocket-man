@@ -17,7 +17,7 @@
 
 Meet **Rocket**. He blasts off to get moving, then plants his feet like a lunar lander when the mission a go.
 
-Rocketman turns a feature request into a researched, staged, verifiable implementation. GitHub Issues and pull requests are his tools; and a synced stage count and his intelligent research and approach strategy adapt to the work.
+**Rocket** turns a feature request into a researched, staged, verifiable implementation. GitHub Issues and pull requests are his tools; synced stages are deployed in his wake; and his approach adapts to the work.
 
 ## What it does
 
