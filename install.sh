@@ -15,21 +15,25 @@ ok(){ printf '\033[32m[OK]\033[0m %s\n' "$*"; }
 warn(){ printf '\033[33m[WARN]\033[0m %s\n' "$*" >&2; }
 die(){ printf '\033[31m[ERROR]\033[0m %s\n' "$*" >&2; exit 1; }
 
-cat <<'ROCKET'\n     /\
+cat <<'ROCKET'
+     /\
     /  \
    /____\
   | o  o |
   |  __  |
    \____/
     /||\
-   /_||_\\nROCKET
+   /_||_\
+ROCKET
 printf '\n'
-cat <<'LUNA'\n   .-----.
+cat <<'LUNA'
+   .-----.
   /| o o |\
  /_|  ^  |_\
     |   |
   __|   |__
- /_________\\nLUNA
+ /_________\
+LUNA
 printf '\n'
 
 while (($#)); do
@@ -129,17 +133,21 @@ for i in "${!BACKUPS[@]}"; do backup="${BACKUPS[$i]}"; [[ -z "$backup" ]] || pri
 printf '  Receipt: %s\n' "$TX/receipt"
 printf '  Next: Start a fresh OpenCode or Claude Code session to discover /rocketman.\n\n'
 
-cat <<'ROCKET_SUCCESS'\n     /\
+cat <<'ROCKET_SUCCESS'
+     /\
     /  \
    /____\
   | ^  ^ |
   |  \_/ |
    \____/
     /||\
-   /_||_\\nROCKET_SUCCESS
-cat <<'LUNA_SUCCESS'\n   .-----.
+   /_||_\
+ROCKET_SUCCESS
+cat <<'LUNA_SUCCESS'
+   .-----.
   /| ^ ^ |\
  /_|  \_/ |_\
     |   |
   __|   |__
- /_________\\nLUNA_SUCCESS
+ /_________\
+LUNA_SUCCESS
