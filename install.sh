@@ -188,8 +188,4 @@ if $ROCKETMAN_VERIFY_ONLY; then
   exit 0
 fi
 
-trap - EXIT HUP INT TERM
 bash "$root/scripts/install-skill.sh" --source "$root" "${ROCKETMAN_ENGINE_ARGS[@]}"
-status=$?
-cleanup
-exit "$status"
