@@ -8,7 +8,7 @@ DRY_RUN=false
 OPENCODE_HOME="${OPENCODE_HOME:-$HOME/.config/opencode}"
 CLAUDE_HOME="${CLAUDE_HOME:-$HOME/.claude}"
 STATE_HOME="${ROCKETMAN_STATE_HOME:-$HOME/.local/state/rocketman}"
-TARGETS=() LABELS=() STAGES=() BACKUPS=() ATTEMPTED=()
+TARGETS=() LABELS=() STAGES=() BACKUPS=()
 ACTIVE=false
 
 info(){ printf '\033[34m[INFO]\033[0m %s\n' "$*"; }
@@ -31,10 +31,22 @@ done
 grep -q '^name: rocketman$' "$SOURCE/SKILL.md" || die "source skill identity is invalid"
 VERSION="$(tr -d '[:space:]' < "$SOURCE/VERSION")"
 [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || die "source version is invalid"
-for tool in awk cp date mkdir mv rm sha256sum; do command -v "$tool" >/dev/null 2>&1 || die "$tool is required"; done
+for tool in awk cp date dirname find grep mkdir mktemp mv rm sha256sum sort tr xargs; do
+  command -v "$tool" >/dev/null 2>&1 || die "$tool is required"
+done
+[[ -f "$SOURCE/contracts/rocketman.json" ]] || die "Rocketman workflow contract is missing"
+[[ -f "$SOURCE/SKILL.md" ]] || die "canonical Rocketman workflow is missing"
+compgen -G "$SOURCE/references/*.md" >/dev/null || die "Rocketman reference material is missing"
 
 case "$MODE" in both|opencode) LABELS+=(opencode); TARGETS+=("$OPENCODE_HOME/skills/rocketman") ;; esac
 case "$MODE" in both|claude) LABELS+=(claude-code); TARGETS+=("$CLAUDE_HOME/skills/rocketman") ;; esac
+for label in "${LABELS[@]}"; do
+  if [[ "$label" == opencode ]]; then
+    [[ -f "$SOURCE/.opencode/skills/rocketman/SKILL.md" ]] || die "OpenCode entrypoint is missing"
+  else
+    [[ -f "$SOURCE/.claude/skills/rocketman/SKILL.md" ]] || die "Claude Code entrypoint is missing"
+  fi
+done
 
 info "Rocketman $VERSION install; selected mode: $MODE"
 info "[install 1/4] Preflight and destination plan"
@@ -52,24 +64,34 @@ mkdir -p "$STATE_HOME/transactions"
 LOCK="$STATE_HOME/transaction.lock"
 mkdir "$LOCK" 2>/dev/null || die "another installation is active or a lock remains at $LOCK; inspect it before recovery"
 TX="$STATE_HOME/transactions/$(date -u +%Y%m%dT%H%M%SZ)-$$"
-mkdir "$TX"
+if ! mkdir "$TX"; then
+  rmdir "$LOCK" 2>/dev/null || true
+  die "could not create transaction record: $TX"
+fi
 printf 'pid=%s\nstarted=%s\n' "$$" "$(date -u +%FT%TZ)" > "$LOCK/owner"
 
 rollback(){
-  local i target backup failed
+  local i target backup stage failed
   $ACTIVE || return 0
   warn "Rollback: restoring committed runtime targets in reverse order"
   for ((i=${#TARGETS[@]}-1;i>=0;i--)); do
-    [[ "${ATTEMPTED[$i]:-0}" == 1 ]] || continue
     target="${TARGETS[$i]}"
     backup="${BACKUPS[$i]:-}"
-    if [[ -e "$target" || -L "$target" ]]; then
+    stage="${STAGES[$i]:-}"
+    if [[ -n "$stage" && ! -e "$stage" && ( -e "$target" || -L "$target" ) ]]; then
       failed="$TX/failed-$i"
-      mv "$target" "$failed" || { warn "could not move failed target aside: $target"; continue; }
-      rm -rf -- "$failed"
+      if mv "$target" "$failed"; then
+        rm -rf -- "$failed"
+      else
+        warn "could not move failed target aside: $target"
+      fi
     fi
     if [[ -n "$backup" && ( -e "$backup" || -L "$backup" ) ]]; then
-      mv "$backup" "$target" || warn "manual recovery required: $backup -> $target"
+      if [[ ! -e "$target" && ! -L "$target" ]]; then
+        mv "$backup" "$target" || warn "manual recovery required: $backup -> $target"
+      else
+        warn "manual recovery required; preserved backup remains at $backup"
+      fi
     fi
   done
   ACTIVE=false
@@ -99,7 +121,7 @@ for i in "${!TARGETS[@]}"; do
   parent="$(dirname "$target")"
   mkdir -p "$parent"
   stage="$(mktemp -d "$parent/.rocketman-stage.XXXXXX")"
-  STAGES+=("$stage")
+  STAGES[$i]="$stage"
   mkdir -p "$stage/contracts" "$stage/references"
   cp "$SOURCE/contracts/rocketman.json" "$stage/contracts/"
   cp "$SOURCE/references/"*.md "$stage/references/"
@@ -123,7 +145,6 @@ for i in "${!TARGETS[@]}"; do
   target="${TARGETS[$i]}"
   parent="$(dirname "$target")"
   backup=""
-  ATTEMPTED[$i]=1
   if [[ -e "$target" || -L "$target" ]]; then
     backup="$parent/.rocketman-backup-$stamp-$$-$i"
     [[ ! -e "$backup" && ! -L "$backup" ]] || die "backup path already exists: $backup"
