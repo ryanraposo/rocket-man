@@ -1,19 +1,21 @@
-# Rocketman
-
 <div align="center">
 <pre>
-     /\
-    /  \
-   /____\
+     /\   
+    /  \  
+   /____\ 
   | o  o |
   |  __  |
-   \____/
-    /||\
-   /_||_\
+   \____/ 
+    /||\  
+   /_||_\ 
 </pre>
 </div>
 
-**Meet Rocket**, Rocketman's little guy. He blasts off to get the work moving, then plants his feet like a lunar lander when the mission is verified.
+# Rocketman
+
+</div>
+
+Meet **Rocket**, Rocketman's little guy. He blasts off to get the work moving, then plants his feet like a lunar lander when the mission is verified.
 
 Rocketman turns a feature request into a researched, staged, verifiable implementation. GitHub Issues and pull requests are the durable project record; stage count and boundaries adapt to the work.
 
@@ -30,15 +32,48 @@ Rocketman turns a feature request into a researched, staged, verifiable implemen
 
 ## Installation
 
-Rocketman is one skill with the same workflow in both supported environments: OpenCode and Claude Code. From a reviewed checkout, run:
+Rocketman installs one canonical workflow into OpenCode, Claude Code, or both. The public bootstrap downloads a versioned release, verifies its exact SHA-256, validates the archive, then hands off to the transactional installer.
+
+**From a reviewed checkout:**
 
 ```bash
 bash install.sh --dry-run
 bash install.sh
 ```
 
-The installer targets `~/.config/opencode/skills/rocketman` and `~/.claude/skills/rocketman`.
+**Remote install — once this repository is public, Pages is enabled, and a matching release is published:**
 
-## Development
+Review-first:
+
+```bash
+curl -fsSLo install.sh --proto '=https' --tlsv1.2 https://ryanraposo.github.io/rocket-man/install.sh
+less install.sh
+bash install.sh --dry-run
+bash install.sh
+```
+
+Short form:
+
+```bash
+curl -fsSL --proto '=https' --tlsv1.2 https://ryanraposo.github.io/rocket-man/install.sh | bash
+```
+
+Version-pinned:
+
+```bash
+curl -fsSL --proto '=https' --tlsv1.2 https://ryanraposo.github.io/rocket-man/install.sh |
+  ROCKETMAN_VERSION=0.1.0 bash
+```
+
+A same-origin checksum detects corruption and mismatches; it is not an independent root of trust. Add `--require-attestation` when the release has GitHub build provenance and the GitHub CLI is available.
+
+The installer targets `~/.config/opencode/skills/rocketman` and `~/.claude/skills/rocketman`. Existing destinations are preserved as sibling backups. A failed multi-runtime commit rolls back in reverse order. Receipts live under `~/.local/state/rocketman/transactions/`.
+
+See [the installer contract](references/installer-contract.md) for the release format, trust boundary, options, and recovery behaviour.
+
+```bash
+bash install.sh --dry-run
+bash install.sh
+```
 
 See AGENTS.md for repository guidance and SKILL.md for the canonical workflow. The workflow contract and reference material live in contracts/ and references/.
