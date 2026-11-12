@@ -4,7 +4,9 @@
      /\
     /  \
    /____\
-     ||
+  | o  o |
+  |  __  |
+   \____/
     /||\
    /_||_\
 </pre>
@@ -25,7 +27,9 @@ Opening pose:
      /\
     /  \
    /____\
-     ||
+  | o  o |
+  |  __  |
+   \____/
     /||\
    /_||_\
 ```
@@ -36,9 +40,11 @@ Verified-success pose:
      /\
     /  \
    /____\
-    \ || /
-     \||/
-      \/
+  | ^  ^ |
+  |  \_/ |
+   \____/
+    /||\
+   /_||_\
 ```
 
 ### Claude Code — Luna
@@ -46,23 +52,23 @@ Verified-success pose:
 Opening pose:
 
 ```text
-    .---.
-   /|   |\
-  /_|___|_\
-     | |
-   __| |__
-  /_______\
+   .-----.
+  /| o o |\
+ /_|  ^  |_\
+    |   |
+  __|   |__
+ /_________\
 ```
 
 Verified-success pose:
 
 ```text
-    .---.
-   /| ^ |\
-  /_|___|_\
-     | |
-   __| |__
-  /_______\
+   .-----.
+  /| ^ ^ |\
+ /_|  \_/ |_\
+    |   |
+  __|   |__
+ /_________\
 ```
 
 All hero grids are printable 7-bit ASCII, graphic-only, and kept within 36 columns. Names live in surrounding copy, never inside the artwork.
