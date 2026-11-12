@@ -1,0 +1,18 @@
+runtime: claude-code
+skill_path: .claude/skills/rocketman/SKILL.md
+mascot:
+  name: Luna
+  opening:
+    - "    .---."
+    - "   /|   |\\"
+    - "  /_|___|_\\"
+    - "     | |"
+    - "   __| |__"
+    - "  /_______\\"
+  success:
+    - "    .---."
+    - "   /| ^ |\\"
+    - "  /_|___|_\\"
+    - "     | |"
+    - "   __| |__"
+    - "  /_______\\"
