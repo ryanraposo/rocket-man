@@ -3,50 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Rocketman: a portable staged implementation skill for OpenCode and Claude Code.">
+<meta name="description" content="Rocketman: one little implementation copilot for OpenCode and Claude Code.">
 <title>Rocketman — staged implementation skill</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#080d18;color:#edf3ff;font:16px/1.65 system-ui,sans-serif}main{max-width:900px;margin:auto;padding:64px 24px}header{text-align:center}.mascots{display:flex;justify-content:center;gap:clamp(24px,8vw,80px);flex-wrap:wrap}.mascot{font:16px/1.12 "Courier New",monospace;text-align:left;color:#86e5ff}h1{font-size:clamp(2.5rem,8vw,5rem);line-height:1;margin:28px 0 12px;letter-spacing:-.06em}.sub{color:#b5c5df;font-size:1.15rem;max-width:660px;margin:0 auto}.runtime{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:44px 0}.card{border:1px solid #29364c;background:#111b2c;border-radius:14px;padding:24px}.card pre{font:15px/1.2 "Courier New",monospace;color:#86e5ff}.card h2{margin:0 0 8px}.steps{margin:38px 0}.steps li{padding:6px 0;color:#c3d1e6}.install{padding:20px;border-radius:12px;background:#101a2a;border:1px solid #29364c;overflow-wrap:anywhere}a{color:#86e5ff}@media(max-width:620px){main{padding:42px 18px}.runtime{grid-template-columns:1fr}.mascot{font-size:14px}}
+*{box-sizing:border-box}body{margin:0;background:#080d18;color:#edf3ff;font:16px/1.65 system-ui,sans-serif}main{max-width:820px;margin:auto;padding:64px 24px}header{text-align:center}.mascot{display:inline-block;margin:0;color:#86e5ff;font:16px/1.12 "Courier New",monospace;text-align:left}h1{font-size:clamp(2.5rem,8vw,5rem);line-height:1;margin:24px 0 12px;letter-spacing:-.06em}.sub{color:#b5c5df;font-size:1.15rem;max-width:660px;margin:0 auto}.intro{margin:46px 0 24px}.steps{margin:38px 0}.steps li{padding:6px 0;color:#c3d1e6}.install{padding:20px;border-radius:12px;background:#101a2a;border:1px solid #29364c;overflow-wrap:anywhere}code,pre{font-family:"Courier New",monospace}a{color:#86e5ff}@media(max-width:620px){main{padding:42px 18px}.mascot{font-size:14px}}
 </style>
 </head>
 <body><main>
 <header>
-<div class="mascots">
-<pre class="mascot" aria-label="Rocket, OpenCode mascot">     /\
-    /  \
-   /____\
+<pre class="mascot" aria-label="Rocket, Rocketman's mascot">     /\   
+    /  \  
+   /____\ 
   | o  o |
   |  __  |
-   \____/
-    /||\
+   \____/ 
+    /||\  
    /_||_\</pre>
-<pre class="mascot" aria-label="Luna, Claude Code mascot">   .-----.
-  /| o o |\
- /_|  ^  |_\
-    |   |
-  __|   |__
- /_________\</pre>
-</div>
 <h1>ROCKETMAN</h1>
 <p class="sub">A serious little implementation copilot. Investigate deeply, plan adaptively, ship in stages, and keep the GitHub record honest.</p>
+<p>Meet <strong>Rocket</strong>: all thrust on take-off, steady landing when the work is verified.</p>
 </header>
-<section class="runtime">
-<article class="card"><h2>OpenCode · Rocket</h2><pre>     /\
-    /  \
-   /____\
-  | o  o |
-  |  __  |
-   \____/
-    /||\
-   /_||_\</pre><p>Rocket brings the shared /rocketman workflow into OpenCode.</p></article>
-<article class="card"><h2>Claude Code · Luna</h2><pre>   .-----.
-  /| o o |\
- /_|  ^  |_\
-    |   |
-  __|   |__
- /_________\</pre><p>Luna brings the same mission discipline to Claude Code.</p></article>
-</section>
-<section class="steps"><h2>One workflow. Adaptive stages.</h2>
+<section class="intro"><h2>One character. One workflow.</h2>
+<p>Rocketman brings the same researched, staged implementation process to both OpenCode and Claude Code. The runtimes are destinations, not separate personalities.</p></section>
+<section class="steps"><h2>Adaptive stages. Real completion.</h2>
 <ol><li>Inspect the repository, tools, architecture, branches, and existing work.</li><li>Research and define outcomes, invariants, dependencies, and verification.</li><li>Choose the right number of stages for the actual feature—not a fixed template.</li><li>Coordinate one parent GitHub issue and its implementation PR.</li><li>Verify each stage, record limitations, and keep completed and remaining work distinct.</li></ol></section>
 <section class="install"><h2>Install from a reviewed checkout</h2><pre>git clone https://github.com/ryanraposo/rocket-man
 cd rocket-man
