@@ -1,6 +1,5 @@
-# Rocketman
-
 <div align="center">
+
 <pre>
      /\   
     /  \  
@@ -11,9 +10,12 @@
     /||\  
    /_||_\ 
 </pre>
+
+# Rocketman
+
 </div>
 
-**Meet Rocket**, Rocketman's little guy. He blasts off to get the work moving, then plants his feet like a lunar lander when the mission is verified.
+Meet **Rocket**, Rocketman's little guy. He blasts off to get the work moving, then plants his feet like a lunar lander when the mission is verified.
 
 Rocketman turns a feature request into a researched, staged, verifiable implementation. GitHub Issues and pull requests are the durable project record; stage count and boundaries adapt to the work.
 
