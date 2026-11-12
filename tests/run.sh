@@ -15,11 +15,11 @@ bootstrap=(root/"install.sh").read_text()
 engine=(root/"scripts/install-skill.sh").read_text()
 agents=(root/"AGENTS.md").read_text()
 runtime_files=[(root/"runtimes/opencode.yaml").read_text(),(root/"runtimes/claude-code.yaml").read_text()]
-assert "\\n".join(line.ljust(max(map(len,opening))) for line in opening) in readme, "centered README art must be cell-aligned"
-assert "\\n".join(opening) in page, "Pages opening pose missing"
-assert bootstrap.count("\\n".join(opening))==1, "bootstrap must print one opening pose"
-assert "\\n".join(opening) not in engine, "transaction engine must not print a second opening pose"
-assert "\\n".join(success) in engine, "verified success lander missing from transaction engine"
+assert "\n".join(line.ljust(max(map(len,opening))) for line in opening) in readme, "centered README art must be cell-aligned"
+assert "\n".join(opening) in page, "Pages opening pose missing"
+assert bootstrap.count("\n".join(opening))==1, "bootstrap must print one opening pose"
+assert "\n".join(opening) not in engine, "transaction engine must not print a second opening pose"
+assert "\n".join(success) in engine, "verified success lander missing from transaction engine"
 assert "Meet **Rocket**" in readme and "Luna" not in readme
 assert "Runtime characters" not in readme and "mascots" not in page
 assert "one named mascot, Rocket" in agents
@@ -63,8 +63,8 @@ grep -q "Next: Start a fresh OpenCode or Claude Code session" "$tmp/install.txt"
 grep -q "^    .-----." "$tmp/install.txt"
 test -s "$tmp/home/.local/state/rocketman/transactions/"*/receipt
 mkdir -p "$tmp/recovery-home/.config/opencode/skills/rocketman" "$tmp/recovery-home/.claude/skills/rocketman"
-printf 'opencode-original\\n' > "$tmp/recovery-home/.config/opencode/skills/rocketman/original.txt"
-printf 'claude-original\\n' > "$tmp/recovery-home/.claude/skills/rocketman/original.txt"
+printf 'opencode-original\n' > "$tmp/recovery-home/.config/opencode/skills/rocketman/original.txt"
+printf 'claude-original\n' > "$tmp/recovery-home/.claude/skills/rocketman/original.txt"
 if HOME="$tmp/recovery-home" OPENCODE_HOME="$tmp/recovery-home/.config/opencode" CLAUDE_HOME="$tmp/recovery-home/.claude" ROCKETMAN_STATE_HOME="$tmp/recovery-home/.local/state/rocketman" ROCKETMAN_TEST_FAIL_AFTER=claude-code bash "$ROOT/install.sh" > "$tmp/rollback.txt" 2>&1; then
   echo "Expected injected failure did not occur" >&2
   exit 1
