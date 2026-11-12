@@ -1,71 +1,21 @@
 # Rocketman
 
+<div align="center">
 <pre>
-     /\
-    /  \
-   /____\
-     ||
-    /||\
-   /_||_\
+     /\   
+    /  \  
+   /____\ 
+  | o  o |
+  |  __  |
+   \____/ 
+    /||\  
+   /_||_\ 
 </pre>
+</div>
 
-**Meet Rocket**, the OpenCode little guy. He carries the shared /rocketman workflow into OpenCode.
-
-For Claude Code, meet **Luna**, the lunar-lander little guy: the same mission discipline, a different ride.
+**Meet Rocket**, Rocketman's little guy. He blasts off to get the work moving, then plants his feet like a lunar lander when the mission is verified.
 
 Rocketman turns a feature request into a researched, staged, verifiable implementation. GitHub Issues and pull requests are the durable project record; stage count and boundaries adapt to the work.
-
-## Runtime characters
-
-### OpenCode — Rocket
-
-Opening pose:
-
-```text
-     /\
-    /  \
-   /____\
-     ||
-    /||\
-   /_||_\
-```
-
-Verified-success pose:
-
-```text
-     /\
-    /  \
-   /____\
-    \ || /
-     \||/
-      \/
-```
-
-### Claude Code — Luna
-
-Opening pose:
-
-```text
-    .---.
-   /|   |\
-  /_|___|_\
-     | |
-   __| |__
-  /_______\
-```
-
-Verified-success pose:
-
-```text
-    .---.
-   /| ^ |\
-  /_|___|_\
-     | |
-   __| |__
-  /_______\
-```
-
-All hero grids are printable 7-bit ASCII, graphic-only, and kept within 36 columns. Names live in surrounding copy, never inside the artwork.
 
 ## What it does
 
@@ -80,7 +30,14 @@ All hero grids are printable 7-bit ASCII, graphic-only, and kept within 36 colum
 
 ## Installation
 
-Runtime adapters and shared skill instructions are in this repository. Installation instructions will be added with the installer.
+Rocketman is one skill with the same workflow in both supported environments: OpenCode and Claude Code. From a reviewed checkout, run:
+
+```bash
+bash install.sh --dry-run
+bash install.sh
+```
+
+The installer targets `~/.config/opencode/skills/rocketman` and `~/.claude/skills/rocketman`.
 
 ## Development
 
